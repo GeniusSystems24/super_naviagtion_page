@@ -1,14 +1,9 @@
 name: super_naviagtion_page
 description: >
-  SuperNaviagtionPage — a GeniusLink design-system Flutter package providing
-  NavigationPage, an independent in-widget navigation container. Any view can
-  open another view above it as a popup / overlay bounded to its parent
-  NavigationPage, with a private navigation stack, back / back-to-root, data
-  passing and typed results, unlimited nesting, and configurable presentation
-  modes (bottom sheet, drawer, full-screen overlay, dialog). Multiple containers
-  run independently on one screen; the system-back action routes only to the
-  active one. Configurable retention (preserve / suspend / recreate / dispose)
-  keeps deep stacks memory-conscious. Light/dark + LTR/RTL.
+  A GeniusLink Flutter package that provides NavigationPage, an independent
+  in-widget navigation container with private stacks, overlays, typed results,
+  nested flows, configurable presentation modes, retention policies, system-back
+  routing, and light/dark plus LTR/RTL support.
 
 version: 0.1.0
 
