@@ -1,0 +1,37 @@
+name: super_naviagtion_page
+description: >
+  SuperNaviagtionPage — a GeniusLink design-system Flutter package providing
+  NavigationPage, an independent in-widget navigation container. Any view can
+  open another view above it as a popup / overlay bounded to its parent
+  NavigationPage, with a private navigation stack, back / back-to-root, data
+  passing and typed results, unlimited nesting, and configurable presentation
+  modes (bottom sheet, drawer, full-screen overlay, dialog). Multiple containers
+  run independently on one screen; the system-back action routes only to the
+  active one. Configurable retention (preserve / suspend / recreate / dispose)
+  keeps deep stacks memory-conscious. Light/dark + LTR/RTL.
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Shared GeniusLink design-system foundation (theme, tokens, type, widgets).
+  super_core:
+    path: ../super_core
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/logo-mark.png
+    - assets/logo-mark-white.png
+  # Drop brand .ttf files under assets/fonts/ to match the design system exactly.
+  # Families: Manrope (display) · Inter (body) · JetBrainsMono (mono) · NotoNaskhArabic
