@@ -9,8 +9,13 @@ description: >
   run independently on one screen; the system-back action routes only to the
   active one. Configurable retention (preserve / suspend / recreate / dispose)
   keeps deep stacks memory-conscious. Light/dark + LTR/RTL.
-publish_to: "none"
+
 version: 0.1.0
+
+homepage: https://github.com/GeniusSystems24/super_naviagtion_page
+repository: https://github.com/GeniusSystems24/super_naviagtion_page
+issue_tracker: https://github.com/GeniusSystems24/super_naviagtion_page/issues
+
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
