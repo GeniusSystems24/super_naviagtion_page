@@ -32,8 +32,12 @@ semantics.
    every unlock is scheduled through `_later(...)` so `dispose()` cancels it.
 4. **Isolation.** A controller mutates only its own `_entries`. All
    cross-container state lives in `NavigationHub`.
-5. **Active owns back.** `NavigationHub.handleBack()` and the widget's
-   `BackButtonListener` no-op unless the container is active.
+5. **Active owns back.** `NavigationHub.handleBack()` pops only the active
+   container. System-back is opt-in at the host (a `PopScope` calling
+   `handleBack()`); never wrap a `BackButtonListener` inside `NavigationPage` —
+   it needs a `Router` ancestor and crashes under `MaterialApp(home:)`. Hub
+   notifications during build (register/unregister run in initState/dispose) are
+   deferred via `addPostFrameCallback` — keep that guard.
 6. **Retention is a View concern.** The controller always keeps the full logical
    stack; `NavigationPage.build` decides which covered views stay mounted from
    `retention` + `maxRetained`. `NavStack` stays pure (returns new lists, no side

@@ -84,8 +84,11 @@ Layer responsibilities:
    schedule unlocks through `_later(...)` so `dispose()` can cancel them.
 3. **Isolation.** A controller touches only its own `_entries`. Cross-container
    coordination goes through `NavigationHub` and nothing else.
-4. **The active container owns back.** `handleBack()` and the widget's
-   `BackButtonListener` must no-op when the container is not active.
+4. **The active container owns back.** `NavigationHub.handleBack()` pops only the
+   active container and no-ops otherwise. System-back is opt-in at the host
+   (a `PopScope` calling `handleBack()`); `NavigationPage` must NOT wrap a
+   `BackButtonListener` — it requires a `Router` ancestor and crashes under a
+   plain `MaterialApp(home:)`.
 5. **Retention is presentation-only.** The controller never unmounts a covered
    view; `NavigationPage.build` decides mounting from `retention` + `maxRetained`.
    Keep the memory logic in the widget.

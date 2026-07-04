@@ -13,8 +13,9 @@ follows [Keep a Changelog](https://keepachangelog.com/); versioning is
 - **`NavigationPage`** — an independent, bounded in-widget navigation container.
   Renders a root view plus a stack of animated overlays clipped to its own
   bounds, registers itself with `NavigationHub`, marks itself active on pointer
-  interaction, and routes the hardware/system back to itself **only when active**
-  (via `BackButtonListener`). Configurable `retention`, `maxRetained`,
+  interaction, and routes the global back to the active container via
+  `NavigationHub.handleBack()` (opt-in at the host — no `Router` dependency).
+  Configurable `retention`, `maxRetained`,
   `defaultMode`, `concurrency`, `height` and `onEvent`. Accepts an external
   `controller` or owns one internally.
 - **`SuperNavigator`** (`NavigationPage.of(context)`) — the navigator API bound

@@ -8,7 +8,9 @@
 // container is untouched. A ChangeNotifier so the active ring can rebuild.
 // ============================================================
 
-import 'package:flutter/foundation.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import 'navigation_controller.dart';
 
@@ -44,7 +46,7 @@ class NavigationHub extends ChangeNotifier {
   void register(SuperNavigationController c) {
     _controllers[c.id] = c;
     _activeId ??= c.id;
-    notifyListeners();
+    _notify();
   }
 
   /// Unregister the container [id]. If it was active, the most-recently
@@ -53,7 +55,7 @@ class NavigationHub extends ChangeNotifier {
     _controllers.remove(id);
     if (_activeId == id) {
       _activeId = _controllers.isEmpty ? null : _controllers.keys.last;
-      notifyListeners();
+      _notify();
     }
   }
 
@@ -61,6 +63,19 @@ class NavigationHub extends ChangeNotifier {
   void setActive(String id) {
     if (_controllers.containsKey(id) && _activeId != id) {
       _activeId = id;
+      _notify();
+    }
+  }
+
+  // register()/unregister() are called from a NavigationPage's initState/dispose,
+  // which run during the parent's build; notifying listeners synchronously then
+  // would markNeedsBuild mid-build. Defer to after the frame when in the build
+  // phase; notify immediately otherwise (e.g. from a pointer event).
+  void _notify() {
+    final binding = WidgetsBinding.instance;
+    if (binding.schedulerPhase == SchedulerPhase.persistentCallbacks) {
+      binding.addPostFrameCallback((_) => notifyListeners());
+    } else {
       notifyListeners();
     }
   }

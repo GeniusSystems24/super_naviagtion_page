@@ -214,7 +214,17 @@ NavigationHub.I.setActive('ledger');   // make a container active programmatical
 NavigationHub.I.activeId;              // which is active
 ```
 
-Removing one container disposes its controller and settles its pending results as `cancelled('disposed')` — the other container is untouched. `BackButtonListener` is wired automatically, so the Android hardware back routes through the Hub to the active container.
+Removing one container disposes its controller and settles its pending results as `cancelled('disposed')` — the other container is untouched. To route the Android hardware / system back to the active container, call `NavigationHub.I.handleBack()` from a `PopScope` (or your own back affordance) at the page level — it is intentionally opt-in so `NavigationPage` works under both Navigator 1.0 (`MaterialApp(home:)`) and Router without requiring a `Router` ancestor:
+
+```dart
+PopScope(
+  canPop: false,
+  onPopInvoked: (didPop) {
+    if (!didPop) NavigationHub.I.handleBack();
+  },
+  child: myScreenWithNavigationPages,
+);
+```
 
 ---
 
@@ -331,7 +341,7 @@ flutter test
 
 ## Limitations
 
-- The system-back integration is wired via `BackButtonListener` (Android hardware back / declarative back). It does **not** push browser `history` entries; deep-linking to a nested overlay is out of scope — combine with `go_router` at the page level if you need URL sync.
+- The system-back integration is **opt-in**: call `NavigationHub.I.handleBack()` from a host `PopScope` / back affordance (see the Multiple-containers section). `NavigationPage` does not wrap a `BackButtonListener` itself, so it works under a plain `MaterialApp(home:)` without a `Router` ancestor. It does **not** push browser `history` entries; deep-linking to a nested overlay is out of scope — combine with `go_router` at the page level if you need URL sync.
 - Transition timing lives in the controller (lock) and is mirrored by the overlay's `AnimationController`; custom transitions should register a `NavTransitionKind` duration that matches.
 - `serialize()` captures view keys, params and options; it does **not** snapshot a view's internal `State` — restored overlays rebuild fresh (their opener was already settled).
 - Fonts are not bundled; see **Install**.

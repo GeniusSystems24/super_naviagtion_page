@@ -372,19 +372,16 @@ class _NavigationPageState extends State<NavigationPage> {
       child: content,
     );
 
+    // Active-container tracking: touching this page makes it the active one, so
+    // the host's back affordance (a PopScope / back button calling
+    // NavigationHub.I.handleBack()) targets it. We intentionally do NOT wrap a
+    // BackButtonListener here — it requires a Router ancestor and would throw
+    // under a plain Navigator 1.0 MaterialApp. Hardware/system back is opt-in at
+    // the host level via NavigationHub.I.handleBack().
     Widget result = Listener(
+      behavior: HitTestBehavior.translucent,
       onPointerDown: (_) => NavigationHub.I.setActive(_controller.id),
-      child: BackButtonListener(
-        onBackButtonPressed: () async {
-          if (!NavigationHub.I.isActive(_controller.id)) return false;
-          if (_controller.canGoBack && !_controller.isTransitioning) {
-            _controller.back();
-            return true;
-          }
-          return false;
-        },
-        child: _NavPageScope(controller: _controller, child: framed),
-      ),
+      child: _NavPageScope(controller: _controller, child: framed),
     );
 
     if (widget.height != null) result = SizedBox(height: widget.height, child: result);
