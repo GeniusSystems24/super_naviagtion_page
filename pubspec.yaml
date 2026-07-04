@@ -20,8 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   # Shared GeniusLink design-system foundation (theme, tokens, type, widgets).
-  super_core:
-    path: ../super_core
+  super_core: ^0.1.0
 
 dev_dependencies:
   flutter_test:
