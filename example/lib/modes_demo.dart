@@ -67,12 +67,13 @@ class _ModesHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.superTheme;
+    final cs = SuperMaterialThemeData.of(context).colorScheme;
     return ColoredBox(
       color: t.bg,
       child: ListView(
         padding: const EdgeInsets.all(18),
         children: [
-          Text('OPEN THE SAME VIEW AS…', style: SuperText.eyebrow.copyWith(color: SuperTokens.accent)),
+          Text('OPEN THE SAME VIEW AS…', style: SuperText.eyebrow.copyWith(color: cs.primary)),
           const SizedBox(height: 12),
           for (final m in _modes) ...[
             DemoRow(

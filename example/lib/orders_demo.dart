@@ -115,13 +115,14 @@ class _OrdersListState extends State<_OrdersList> {
   @override
   Widget build(BuildContext context) {
     final t = context.superTheme;
+    final cs = SuperMaterialThemeData.of(context).colorScheme;
     return ColoredBox(
       color: t.bg,
       child: ListView(
         padding: const EdgeInsets.all(18),
         children: [
           Text('PURCHASING • APPROVALS',
-              style: SuperText.eyebrow.copyWith(color: SuperTokens.accent)),
+              style: SuperText.eyebrow.copyWith(color: cs.primary)),
           const SizedBox(height: 5),
           Text('Open Purchase Orders', style: SuperText.h1.copyWith(fontSize: 20, color: t.fg1)),
           const SizedBox(height: 5),
@@ -269,10 +270,11 @@ class _ConfirmDecision extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.superTheme;
+    final cs = SuperMaterialThemeData.of(context).colorScheme;
     final nav = NavigationPage.of(context);
     final p = nav.paramsAs<Map>()!;
     final danger = p['action'] == 'Reject';
-    final color = danger ? SuperTokens.danger : SuperTokens.success;
+    final color = danger ? cs.error : SuperTokens.success;
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -313,6 +315,7 @@ class _ConfirmDecision extends StatelessWidget {
 
 InputDecoration _inputDecoration(BuildContext context, String hint) {
   final t = context.superTheme;
+    final cs = SuperMaterialThemeData.of(context).colorScheme;
   OutlineInputBorder border(Color c) => OutlineInputBorder(
         borderRadius: BorderRadius.circular(SuperTokens.radiusControl),
         borderSide: BorderSide(color: c),
@@ -325,6 +328,6 @@ InputDecoration _inputDecoration(BuildContext context, String hint) {
     isDense: true,
     contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
     enabledBorder: border(t.borderStrong),
-    focusedBorder: border(SuperTokens.accent),
+    focusedBorder: border(cs.primary),
   );
 }

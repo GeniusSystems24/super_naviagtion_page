@@ -29,14 +29,8 @@ class ExampleApp extends StatefulWidget {
 }
 
 class _ExampleAppState extends State<ExampleApp> {
-  ThemeMode _mode = ThemeMode.dark;
+  ThemeMode _mode = ThemeMode.light;
   TextDirection _dir = TextDirection.ltr;
-
-  ThemeData _theme(SuperThemeData s) => ThemeData(
-        brightness: s.brightness,
-        scaffoldBackgroundColor: s.bg,
-        extensions: [s],
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +38,21 @@ class _ExampleAppState extends State<ExampleApp> {
       debugShowCheckedModeBanner: false,
       title: 'Super Naviagtion Page',
       themeMode: _mode,
-      theme: _theme(SuperThemeData.light),
-      darkTheme: _theme(SuperThemeData.dark),
-      builder: (context, child) => Directionality(textDirection: _dir, child: child!),
+      theme: SuperMaterialThemeData.light(
+        palette: SuperPalette.purplePalette,
+      ),
+      darkTheme: SuperMaterialThemeData.dark(
+        palette: SuperPalette.purplePalette,
+      ),
+      builder: (context, child) =>
+          Directionality(textDirection: _dir, child: child!),
       home: _Launcher(
         mode: _mode,
         dir: _dir,
-        onToggleTheme: () => setState(() => _mode = _mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark),
-        onToggleDir: () => setState(() => _dir = _dir == TextDirection.ltr ? TextDirection.rtl : TextDirection.ltr),
+        onToggleTheme: () => setState(() =>
+            _mode = _mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark),
+        onToggleDir: () => setState(() => _dir =
+            _dir == TextDirection.ltr ? TextDirection.rtl : TextDirection.ltr),
       ),
     );
   }
@@ -66,28 +67,48 @@ class _Demo {
 }
 
 class _Launcher extends StatelessWidget {
-  const _Launcher({required this.mode, required this.dir, required this.onToggleTheme, required this.onToggleDir});
+  const _Launcher(
+      {required this.mode,
+      required this.dir,
+      required this.onToggleTheme,
+      required this.onToggleDir});
   final ThemeMode mode;
   final TextDirection dir;
   final VoidCallback onToggleTheme;
   final VoidCallback onToggleDir;
 
   static final _demos = [
-    _Demo('Sequential navigation', 'One container · list → details → confirm · typed results',
-        Icons.list_alt_outlined, (_) => const OrdersDemo()),
-    _Demo('Independent containers', 'Two isolated stacks · active-container back routing',
-        Icons.dashboard_outlined, (_) => const ContainersDemo()),
-    _Demo('Multi-step workflow', 'Guarded wizard · child picker · error result · restore',
-        Icons.assignment_outlined, (_) => const WizardDemo()),
-    _Demo('Presentation modes', 'One view presented six ways · dialog/sheet/drawer/full',
-        Icons.view_carousel_outlined, (_) => const ModesDemo()),
-    _Demo('Deep nesting & retention', 'Unlimited nesting · preserve/suspend/recreate/dispose',
-        Icons.account_tree_outlined, (_) => const NestedDemo()),
+    _Demo(
+        'Sequential navigation',
+        'One container · list → details → confirm · typed results',
+        Icons.list_alt_outlined,
+        (_) => const OrdersDemo()),
+    _Demo(
+        'Independent containers',
+        'Two isolated stacks · active-container back routing',
+        Icons.dashboard_outlined,
+        (_) => const ContainersDemo()),
+    _Demo(
+        'Multi-step workflow',
+        'Guarded wizard · child picker · error result · restore',
+        Icons.assignment_outlined,
+        (_) => const WizardDemo()),
+    _Demo(
+        'Presentation modes',
+        'One view presented six ways · dialog/sheet/drawer/full',
+        Icons.view_carousel_outlined,
+        (_) => const ModesDemo()),
+    _Demo(
+        'Deep nesting & retention',
+        'Unlimited nesting · preserve/suspend/recreate/dispose',
+        Icons.account_tree_outlined,
+        (_) => const NestedDemo()),
   ];
 
   @override
   Widget build(BuildContext context) {
     final t = context.superTheme;
+    final cs = SuperMaterialThemeData.of(context).colorScheme;
     return Scaffold(
       backgroundColor: t.bg,
       body: SafeArea(
@@ -100,11 +121,13 @@ class _Launcher extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text('SUPER NAVIAGTION PAGE • GALLERY',
-                      style: SuperText.eyebrow.copyWith(color: SuperTokens.accent)),
+                      style: SuperText.eyebrow.copyWith(color: cs.primary)),
                   const SizedBox(height: SuperTokens.space2),
-                  Text('NavigationPage Demos', style: SuperText.h1.copyWith(color: t.fg1)),
+                  Text('NavigationPage Demos',
+                      style: SuperText.h1.copyWith(color: t.fg1)),
                   const SizedBox(height: SuperTokens.space2),
-                  Text('Five scenarios, one widget — an independent, bounded navigation container.',
+                  Text(
+                      'Five scenarios, one widget — an independent, bounded navigation container.',
                       style: SuperText.body.copyWith(color: t.fg3)),
                   const SizedBox(height: SuperTokens.space8),
                   for (final d in _demos) ...[
@@ -114,13 +137,16 @@ class _Launcher extends StatelessWidget {
                   const SizedBox(height: SuperTokens.space6),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     SuperButton(
-                      label: mode == ThemeMode.dark ? 'Light Theme' : 'Dark Theme',
+                      label:
+                          mode == ThemeMode.dark ? 'Light Theme' : 'Dark Theme',
                       variant: SuperButtonVariant.secondary,
                       onPressed: onToggleTheme,
                     ),
                     const SizedBox(width: SuperTokens.space3),
                     SuperButton(
-                      label: dir == TextDirection.ltr ? 'العربية (RTL)' : 'English (LTR)',
+                      label: dir == TextDirection.ltr
+                          ? 'العربية (RTL)'
+                          : 'English (LTR)',
                       variant: SuperButtonVariant.secondary,
                       onPressed: onToggleDir,
                     ),
@@ -141,11 +167,13 @@ class _DemoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.superTheme;
+    final cs = SuperMaterialThemeData.of(context).colorScheme;
     return Material(
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(SuperTokens.radiusCard),
-        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: demo.builder)),
+        onTap: () => Navigator.of(context)
+            .push(MaterialPageRoute<void>(builder: demo.builder)),
         child: Container(
           padding: const EdgeInsets.all(SuperTokens.space4),
           decoration: BoxDecoration(
@@ -160,18 +188,23 @@ class _DemoCard extends StatelessWidget {
               height: 44,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Color.alphaBlend(SuperTokens.accent.withOpacity(0.14), t.surface),
+                color:
+                    Color.alphaBlend(cs.primary.withOpacity(0.14), t.surface),
                 borderRadius: BorderRadius.circular(SuperTokens.radiusControl),
               ),
-              child: Icon(demo.icon, size: 22, color: SuperTokens.accent),
+              child: Icon(demo.icon, size: 22, color: cs.primary),
             ),
             const SizedBox(width: SuperTokens.space4),
             Expanded(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(demo.title, style: SuperText.heading.copyWith(color: t.fg1)),
-                const SizedBox(height: 2),
-                Text(demo.subtitle, style: SuperText.caption.copyWith(color: t.fg3)),
-              ]),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(demo.title,
+                        style: SuperText.heading.copyWith(color: t.fg1)),
+                    const SizedBox(height: 2),
+                    Text(demo.subtitle,
+                        style: SuperText.caption.copyWith(color: t.fg3)),
+                  ]),
             ),
             Icon(Icons.chevron_right, color: t.fg4),
           ]),

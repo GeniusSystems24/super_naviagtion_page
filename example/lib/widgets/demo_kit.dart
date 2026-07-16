@@ -12,7 +12,8 @@ import 'package:super_naviagtion_page/super_naviagtion_page.dart';
 
 /// A simple page scaffold for a demo.
 class DemoScaffold extends StatelessWidget {
-  const DemoScaffold({super.key, required this.title, required this.body, this.subtitle});
+  const DemoScaffold(
+      {super.key, required this.title, required this.body, this.subtitle});
   final String title;
   final String? subtitle;
   final Widget body;
@@ -39,7 +40,8 @@ class DemoScaffold extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Padding(padding: const EdgeInsets.all(SuperTokens.space6), child: body),
+        child: Padding(
+            padding: const EdgeInsets.all(SuperTokens.space6), child: body),
       ),
     );
   }
@@ -47,7 +49,11 @@ class DemoScaffold extends StatelessWidget {
 
 /// A rolling in-memory lifecycle-event log bound to a controller.
 class EventLogPanel extends StatefulWidget {
-  const EventLogPanel({super.key, required this.controllers, this.height = 300, this.title = 'Lifecycle events'});
+  const EventLogPanel(
+      {super.key,
+      required this.controllers,
+      this.height = 300,
+      this.title = 'Lifecycle events'});
   final List<SuperNavigationController> controllers;
   final double height;
   final String title;
@@ -94,12 +100,28 @@ class EventLogPanelState extends State<EventLogPanel> {
   }
 
   (Color, IconData, String) _meta(NavEvent e) => switch (e) {
-        NavEvent.navigationStarted => (SuperTokens.accent, Icons.north_east, 'started'),
-        NavEvent.navigationCompleted => (SuperTokens.success, Icons.check, 'completed'),
+        NavEvent.navigationStarted => (
+            SuperMaterialThemeData.of(context).colorScheme.primary,
+            Icons.north_east,
+            'started'
+          ),
+        NavEvent.navigationCompleted => (
+            SuperTokens.success,
+            Icons.check,
+            'completed'
+          ),
         NavEvent.navigatingBack => (SuperTokens.warning, Icons.west, 'back'),
         NavEvent.viewClosed => (context.superTheme.fg3, Icons.close, 'closed'),
-        NavEvent.navigationRejected => (SuperTokens.danger, Icons.block, 'rejected'),
-        NavEvent.closeBlocked => (SuperTokens.danger, Icons.lock_outline, 'blocked'),
+        NavEvent.navigationRejected => (
+            SuperMaterialThemeData.of(context).colorScheme.error,
+            Icons.block,
+            'rejected'
+          ),
+        NavEvent.closeBlocked => (
+            SuperMaterialThemeData.of(context).colorScheme.error,
+            Icons.lock_outline,
+            'blocked'
+          ),
       };
 
   @override
@@ -118,7 +140,8 @@ class EventLogPanelState extends State<EventLogPanel> {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
-            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: t.border))),
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: t.border))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -126,7 +149,8 @@ class EventLogPanelState extends State<EventLogPanel> {
                     style: SuperText.label.copyWith(color: t.fg3)),
                 GestureDetector(
                   onTap: () => setState(_lines.clear),
-                  child: Text('CLEAR', style: SuperText.pill.copyWith(color: t.fg4)),
+                  child: Text('CLEAR',
+                      style: SuperText.pill.copyWith(color: t.fg4)),
                 ),
               ],
             ),
@@ -134,7 +158,8 @@ class EventLogPanelState extends State<EventLogPanel> {
           Expanded(
             child: _lines.isEmpty
                 ? Center(
-                    child: Text('Interact with the container —\nevents land here.',
+                    child: Text(
+                        'Interact with the container —\nevents land here.',
                         textAlign: TextAlign.center,
                         style: SuperText.caption.copyWith(color: t.fg4)))
                 : ListView.builder(
@@ -146,13 +171,15 @@ class EventLogPanelState extends State<EventLogPanel> {
                       final detail = l.data.viewKey ??
                           (l.data.toRoot ? 'root' : l.data.reason ?? '');
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 4),
                         child: Row(
                           children: [
                             SizedBox(
                               width: 62,
                               child: Text(l.time,
-                                  style: SuperText.mono.copyWith(fontSize: 10, color: t.fg4)),
+                                  style: SuperText.mono
+                                      .copyWith(fontSize: 10, color: t.fg4)),
                             ),
                             Icon(icon, size: 13, color: color),
                             const SizedBox(width: 7),
@@ -164,7 +191,8 @@ class EventLogPanelState extends State<EventLogPanel> {
                             Expanded(
                               child: Text(detail,
                                   overflow: TextOverflow.ellipsis,
-                                  style: SuperText.mono.copyWith(fontSize: 11, color: t.fg2)),
+                                  style: SuperText.mono
+                                      .copyWith(fontSize: 11, color: t.fg2)),
                             ),
                           ],
                         ),
@@ -213,22 +241,34 @@ class DemoRow extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(leadingIcon ?? Icons.circle, size: leadingIcon != null ? 16 : 7,
-                  color: tint ?? SuperTokens.accent),
+              Icon(leadingIcon ?? Icons.circle,
+                  size: leadingIcon != null ? 16 : 7,
+                  color: tint ??
+                      SuperMaterialThemeData.of(context).colorScheme.primary),
               const SizedBox(width: 11),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(code, style: SuperText.mono.copyWith(fontSize: 12, fontWeight: FontWeight.w700, color: t.fg1)),
+                    Text(code,
+                        style: SuperText.mono.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: t.fg1)),
                     const SizedBox(height: 1),
-                    Text(label, maxLines: 1, overflow: TextOverflow.ellipsis,
+                    Text(label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: SuperText.caption.copyWith(color: t.fg3)),
                   ],
                 ),
               ),
               if (trailing != null)
-                Text(trailing!, style: SuperText.mono.copyWith(fontSize: 12.5, fontWeight: FontWeight.w700, color: t.fg2)),
+                Text(trailing!,
+                    style: SuperText.mono.copyWith(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w700,
+                        color: t.fg2)),
               if (onTap != null) ...[
                 const SizedBox(width: 6),
                 Icon(Icons.chevron_right, size: 16, color: t.fg4),
@@ -243,7 +283,8 @@ class DemoRow extends StatelessWidget {
 
 /// A key/value cell.
 class DemoCell extends StatelessWidget {
-  const DemoCell({super.key, required this.k, required this.v, this.mono = false});
+  const DemoCell(
+      {super.key, required this.k, required this.v, this.mono = false});
   final String k;
   final String v;
   final bool mono;
@@ -263,8 +304,9 @@ class DemoCell extends StatelessWidget {
         children: [
           Text(k.toUpperCase(), style: SuperText.pill.copyWith(color: t.fg4)),
           const SizedBox(height: 3),
-          Text(v, style: (mono ? SuperText.mono : SuperText.body).copyWith(
-              fontSize: 13.5, fontWeight: FontWeight.w600, color: t.fg1)),
+          Text(v,
+              style: (mono ? SuperText.mono : SuperText.body).copyWith(
+                  fontSize: 13.5, fontWeight: FontWeight.w600, color: t.fg1)),
         ],
       ),
     );
@@ -273,7 +315,8 @@ class DemoCell extends StatelessWidget {
 
 /// A small labelled stat chip.
 class DemoStat extends StatelessWidget {
-  const DemoStat({super.key, required this.label, required this.value, this.color});
+  const DemoStat(
+      {super.key, required this.label, required this.value, this.color});
   final String label;
   final String value;
   final Color? color;
@@ -292,10 +335,14 @@ class DemoStat extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(label.toUpperCase(), style: SuperText.pill.copyWith(color: t.fg4)),
+            Text(label.toUpperCase(),
+                style: SuperText.pill.copyWith(color: t.fg4)),
             const SizedBox(height: 2),
-            Text(value, style: SuperText.mono.copyWith(
-                fontSize: 17, fontWeight: FontWeight.w700, color: color ?? t.fg1)),
+            Text(value,
+                style: SuperText.mono.copyWith(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                    color: color ?? t.fg1)),
           ],
         ),
       ),
@@ -326,7 +373,8 @@ class OverlayHeader extends StatelessWidget {
     final t = context.superTheme;
     return Container(
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: t.border))),
+      decoration:
+          BoxDecoration(border: Border(bottom: BorderSide(color: t.border))),
       child: Row(
         children: [
           if (onBack != null) ...[
@@ -338,10 +386,17 @@ class OverlayHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(eyebrow.toUpperCase(),
-                    style: SuperText.pill.copyWith(color: tint ?? SuperTokens.accent)),
+                    style: SuperText.pill.copyWith(
+                        color: tint ??
+                            SuperMaterialThemeData.of(context)
+                                .colorScheme
+                                .primary)),
                 const SizedBox(height: 2),
-                Text(title, maxLines: 1, overflow: TextOverflow.ellipsis,
-                    style: SuperText.heading.copyWith(fontSize: 15, color: t.fg1)),
+                Text(title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style:
+                        SuperText.heading.copyWith(fontSize: 15, color: t.fg1)),
               ],
             ),
           ),

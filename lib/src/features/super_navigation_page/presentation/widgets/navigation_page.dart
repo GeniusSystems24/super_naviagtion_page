@@ -103,12 +103,12 @@ class SuperNavigator {
 
   /// Register an unsaved-changes guard for this view.
   void setGuard(NavCloseGuard guard) {
-    if (_entryId != null) _c.setGuard(_entryId!, guard);
+    if (_entryId != null) _c.setGuard(_entryId, guard);
   }
 
   /// Remove this view's close-guard.
   void clearGuard() {
-    if (_entryId != null) _c.clearGuard(_entryId!);
+    if (_entryId != null) _c.clearGuard(_entryId);
   }
 }
 
@@ -301,8 +301,8 @@ class _NavigationPageState extends State<NavigationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.superTheme;
-
+      final theme = SuperMaterialThemeData.of(context);
+    final t = theme.superTheme;
     final content = LayoutBuilder(
       builder: (context, constraints) {
         final pageSize = Size(
@@ -359,11 +359,11 @@ class _NavigationPageState extends State<NavigationPage> {
             borderRadius: BorderRadius.circular(SuperTokens.radiusCard),
             border: Border.all(
               color: isActive
-                  ? Color.alphaBlend(SuperTokens.accent.withValues(alpha: 0.6), t.borderStrong)
+                  ? Color.alphaBlend(theme.colorScheme.primary.withValues(alpha: 0.6), t.borderStrong)
                   : t.border,
             ),
             boxShadow: isActive
-                ? [BoxShadow(color: SuperTokens.accent.withValues(alpha: 0.28), blurRadius: 0, spreadRadius: 2)]
+                ? [BoxShadow(color: theme.colorScheme.primary.withValues(alpha: 0.28), blurRadius: 0, spreadRadius: 2)]
                 : null,
           ),
           child: child,
@@ -423,7 +423,7 @@ class _MissingView extends StatelessWidget {
         color: context.superTheme.surface,
         child: Center(
           child: Text('Unknown view: $viewKey',
-              style: SuperText.body.copyWith(color: SuperTokens.danger)),
+              style: SuperText.body.copyWith(color: SuperMaterialThemeData.of(context).colorScheme.error)),
         ),
       );
 }

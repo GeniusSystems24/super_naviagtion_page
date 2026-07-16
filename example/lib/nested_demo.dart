@@ -106,7 +106,7 @@ class _NestedDemoState extends State<NestedDemo> {
             ]),
             const SizedBox(height: 14),
             Row(children: [
-              DemoStat(label: 'Depth', value: '$_depth', color: SuperTokens.accent),
+              DemoStat(label: 'Depth', value: '$_depth', color: SuperMaterialThemeData.of(context).colorScheme.primary),
               const SizedBox(width: 8),
               DemoStat(label: 'In memory', value: '$mounted', color: stateKept ? SuperTokens.success : SuperTokens.warning),
             ]),
@@ -146,11 +146,11 @@ class _Choice extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
         decoration: BoxDecoration(
           color: selected ? t.selectionFill(0.14) : t.inputBg,
-          border: Border.all(color: selected ? SuperTokens.accent : t.border),
+          border: Border.all(color: selected ? SuperMaterialThemeData.of(context).colorScheme.primary : t.border),
           borderRadius: BorderRadius.circular(SuperTokens.radiusControl),
         ),
         child: Text(label, style: SuperText.caption.copyWith(
-            color: selected ? SuperTokens.accent : t.fg2,
+            color: selected ? SuperMaterialThemeData.of(context).colorScheme.primary : t.fg2,
             fontWeight: selected ? FontWeight.w700 : FontWeight.w400)),
       ),
     );
@@ -167,7 +167,7 @@ class _NestedRoot extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          Text('CATALOG • ROOT', style: SuperText.eyebrow.copyWith(color: SuperTokens.accent)),
+          Text('CATALOG • ROOT', style: SuperText.eyebrow.copyWith(color: SuperMaterialThemeData.of(context).colorScheme.primary)),
           const SizedBox(height: 5),
           Text('A mini-app in one container', style: SuperText.h1.copyWith(fontSize: 20, color: t.fg1)),
           const SizedBox(height: 5),

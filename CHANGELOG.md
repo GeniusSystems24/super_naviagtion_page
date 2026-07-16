@@ -4,6 +4,46 @@ All notable changes to **super_naviagtion_page** are documented here. Format
 follows [Keep a Changelog](https://keepachangelog.com/); versioning is
 [SemVer](https://semver.org/).
 
+## [0.2.0] — 2026-07-16
+
+### Changed
+
+- Upgraded to **super_core 1.1.0**. No source changes required — surfaces are
+  read via `SuperThemeData.of(context)`, which `SuperMaterialThemeData` (now a
+  `ThemeData` subclass) registers automatically, so palette, brightness **and**
+  the responsive `SuperDeviceMode` (mobile / tablet / desktop) tokens flow
+  through with no extra wiring:
+
+  ```dart
+  MaterialApp(
+    theme:     SuperMaterialThemeData.light(mode: SuperDeviceMode.desktop),
+    darkTheme: SuperMaterialThemeData.dark(mode: SuperDeviceMode.desktop),
+  );
+  ```
+- Minimum raised to `dart >=3.8.0`, `flutter >=3.32.0`.
+
+---
+
+## [0.1.1] — 2026-07-14
+
+### Changed
+
+- Upgraded to **super_core 1.0.0**. No source changes required — all overlay
+  and sheet surfaces are read via `SuperThemeData.of(context)`, which is now
+  auto-registered by `SuperMaterialThemeData`. Palette switching and light/dark
+  mode work without any extra wiring:
+
+  ```dart
+  MaterialApp(
+    theme:     SuperMaterialThemeData.light(palette: SuperPalette.purplePalette),
+    darkTheme: SuperMaterialThemeData.dark(palette: SuperPalette.purplePalette),
+    // NavigationPage overlays (dialog, bottom sheet, drawer, full-screen)
+    // adapt automatically to the active palette and brightness.
+  );
+  ```
+
+---
+
 ## [0.1.0] — 2026-07-04
 
 ### Added

@@ -18,7 +18,12 @@ const _templates = [
   ('retail', 'Retail Store', 'USD'),
   ('wholesale', 'Wholesale Depot', 'SAR'),
 ];
-const _locations = ['Downtown Central', 'Riverside Depot', 'Main Branch', 'North Hub'];
+const _locations = [
+  'Downtown Central',
+  'Riverside Depot',
+  'Main Branch',
+  'North Hub'
+];
 
 class WizardDemo extends StatefulWidget {
   const WizardDemo({super.key});
@@ -27,15 +32,14 @@ class WizardDemo extends StatefulWidget {
 }
 
 class _WizardDemoState extends State<WizardDemo> {
-  SuperNavigationController _controller = SuperNavigationController(id: 'wizard');
+  SuperNavigationController _controller =
+      SuperNavigationController(id: 'wizard');
   int _pageKey = 0;
-  NavStackSnapshot? _restore;
 
   void _recreate() {
     final snap = _controller.serialize();
     final old = _controller;
     setState(() {
-      _restore = snap;
       _controller = SuperNavigationController(id: 'wizard')..restore(snap);
       _pageKey++;
     });
@@ -75,10 +79,14 @@ class _WizardDemoState extends State<WizardDemo> {
           onPressed: _recreate,
         ),
         const SizedBox(height: 8),
-        Text('Open the wizard a level deep, then Recreate — the stack depth is serialized and restored on the fresh controller.',
+        Text(
+            'Open the wizard a level deep, then Recreate — the stack depth is serialized and restored on the fresh controller.',
             style: SuperText.caption.copyWith(color: t.fg4)),
         const SizedBox(height: 12),
-        EventLogPanel(controllers: [_controller], height: wide ? 320 : 200, title: 'Lifecycle events'),
+        EventLogPanel(
+            controllers: [_controller],
+            height: wide ? 320 : 200,
+            title: 'Lifecycle events'),
       ],
     );
 
@@ -91,7 +99,11 @@ class _WizardDemoState extends State<WizardDemo> {
               const SizedBox(width: 16),
               SizedBox(width: 320, child: rail),
             ])
-          : ListView(children: [SizedBox(height: 440, child: page), const SizedBox(height: 14), rail]),
+          : ListView(children: [
+              SizedBox(height: 440, child: page),
+              const SizedBox(height: 14),
+              rail
+            ]),
     );
   }
 }
@@ -105,7 +117,8 @@ class _WizardStart extends StatefulWidget {
 class _WizardStartState extends State<_WizardStart> {
   String? _result;
 
-  Future<void> _start(BuildContext context, (String, String, String) tpl) async {
+  Future<void> _start(
+      BuildContext context, (String, String, String) tpl) async {
     setState(() => _result = null);
     final r = await NavigationPage.of(context).open(
       'form',
@@ -120,7 +133,8 @@ class _WizardStartState extends State<_WizardStart> {
           final m = data as Map;
           return 'Created ${m['nameEn']} in ${(m['location'] as String).isEmpty ? "no location" : m['location']} · ${m['currency']}';
         },
-        cancelled: (reason) => 'Setup ${reason == 'discarded' ? 'discarded' : 'cancelled'} — nothing saved',
+        cancelled: (reason) =>
+            'Setup ${reason == 'discarded' ? 'discarded' : 'cancelled'} — nothing saved',
         error: (e, _) => 'Failed: $e — no changes applied',
       );
     });
@@ -129,16 +143,20 @@ class _WizardStartState extends State<_WizardStart> {
   @override
   Widget build(BuildContext context) {
     final t = context.superTheme;
+    final cs = SuperMaterialThemeData.of(context).colorScheme;
     return ColoredBox(
       color: t.bg,
       child: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          Text('STORES & PRODUCTS • SETUP', style: SuperText.eyebrow.copyWith(color: SuperTokens.accent)),
+          Text('STORES & PRODUCTS • SETUP',
+              style: SuperText.eyebrow.copyWith(color: cs.primary)),
           const SizedBox(height: 5),
-          Text('Create Store', style: SuperText.h1.copyWith(fontSize: 20, color: t.fg1)),
+          Text('Create Store',
+              style: SuperText.h1.copyWith(fontSize: 20, color: t.fg1)),
           const SizedBox(height: 5),
-          Text('Pick a template to seed the setup form. The wizard opens as a sheet, edits its own draft, and returns a result here.',
+          Text(
+              'Pick a template to seed the setup form. The wizard opens as a sheet, edits its own draft, and returns a result here.',
               style: SuperText.caption.copyWith(color: t.fg3)),
           const SizedBox(height: 16),
           Row(children: [
@@ -154,13 +172,20 @@ class _WizardStartState extends State<_WizardStart> {
                       border: Border.all(color: t.border),
                       borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
                     ),
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      const Icon(Icons.storefront_outlined, size: 18, color: SuperTokens.accent),
-                      const SizedBox(height: 8),
-                      Text(tpl.$2, style: SuperText.body.copyWith(fontWeight: FontWeight.w700, color: t.fg1)),
-                      const SizedBox(height: 3),
-                      Text('seed · ${tpl.$3}', style: SuperText.mono.copyWith(fontSize: 11, color: t.fg4)),
-                    ]),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(Icons.storefront_outlined,
+                              size: 18, color: cs.primary),
+                          const SizedBox(height: 8),
+                          Text(tpl.$2,
+                              style: SuperText.body.copyWith(
+                                  fontWeight: FontWeight.w700, color: t.fg1)),
+                          const SizedBox(height: 3),
+                          Text('seed · ${tpl.$3}',
+                              style: SuperText.mono
+                                  .copyWith(fontSize: 11, color: t.fg4)),
+                        ]),
                   ),
                 ),
               ),
@@ -176,7 +201,8 @@ class _WizardStartState extends State<_WizardStart> {
                 border: Border.all(color: t.border),
                 borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
               ),
-              child: Text(_result!, style: SuperText.caption.copyWith(color: t.fg2)),
+              child: Text(_result!,
+                  style: SuperText.caption.copyWith(color: t.fg2)),
             ),
           ],
         ],
@@ -193,8 +219,10 @@ class _WizardForm extends StatefulWidget {
 
 class _WizardFormState extends State<_WizardForm> {
   late final Map _seed = NavigationPage.paramsOf(context) as Map;
-  late final TextEditingController _name = TextEditingController(text: _seed['nameEn'] as String);
-  late final TextEditingController _currency = TextEditingController(text: _seed['currency'] as String);
+  late final TextEditingController _name =
+      TextEditingController(text: _seed['nameEn'] as String);
+  late final TextEditingController _currency =
+      TextEditingController(text: _seed['currency'] as String);
   String _location = '';
   bool _dirty = false;
   bool _failMode = false;
@@ -242,8 +270,8 @@ class _WizardFormState extends State<_WizardForm> {
   }
 
   Future<void> _pickLocation() async {
-    final r = await NavigationPage.of(context)
-        .open('location', params: _location, mode: NavPresentationMode.drawer, key: 'location');
+    final r = await NavigationPage.of(context).open('location',
+        params: _location, mode: NavPresentationMode.drawer, key: 'location');
     if (r.isSuccess) {
       setState(() => _location = r.dataOrNull<String>() ?? _location);
       _markDirty();
@@ -253,6 +281,7 @@ class _WizardFormState extends State<_WizardForm> {
   @override
   Widget build(BuildContext context) {
     final t = context.superTheme;
+    final cs = SuperMaterialThemeData.of(context).colorScheme;
     final nav = NavigationPage.of(context);
     return Column(
       children: [
@@ -260,7 +289,9 @@ class _WizardFormState extends State<_WizardForm> {
           eyebrow: 'Step 1 of 1 · setup sheet',
           title: 'Store details',
           tint: SuperTokens.warning,
-          trailing: _dirty ? const StatusPill('UNSAVED', tone: PillTone.warning) : const StatusPill('GUARDED', tone: PillTone.neutral),
+          trailing: _dirty
+              ? const StatusPill('UNSAVED', tone: PillTone.warning)
+              : const StatusPill('GUARDED', tone: PillTone.neutral),
         ),
         Expanded(
           child: ListView(
@@ -268,11 +299,19 @@ class _WizardFormState extends State<_WizardForm> {
             children: [
               Text('NAME', style: SuperText.label.copyWith(color: t.fg3)),
               const SizedBox(height: 6),
-              TextField(controller: _name, onChanged: (_) => _markDirty(), style: SuperText.body.copyWith(color: t.fg1), decoration: _dec(context, 'Store name')),
+              TextField(
+                  controller: _name,
+                  onChanged: (_) => _markDirty(),
+                  style: SuperText.body.copyWith(color: t.fg1),
+                  decoration: _dec(context, 'Store name')),
               const SizedBox(height: 14),
               Text('CURRENCY', style: SuperText.label.copyWith(color: t.fg3)),
               const SizedBox(height: 6),
-              TextField(controller: _currency, onChanged: (_) => _markDirty(), style: SuperText.body.copyWith(color: t.fg1), decoration: _dec(context, 'USD')),
+              TextField(
+                  controller: _currency,
+                  onChanged: (_) => _markDirty(),
+                  style: SuperText.body.copyWith(color: t.fg1),
+                  decoration: _dec(context, 'USD')),
               const SizedBox(height: 14),
               Text('LOCATION', style: SuperText.label.copyWith(color: t.fg3)),
               const SizedBox(height: 6),
@@ -280,15 +319,22 @@ class _WizardFormState extends State<_WizardForm> {
                 onTap: _pickLocation,
                 borderRadius: BorderRadius.circular(SuperTokens.radiusControl),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
                   decoration: BoxDecoration(
                     color: t.inputBg,
                     border: Border.all(color: t.borderStrong),
-                    borderRadius: BorderRadius.circular(SuperTokens.radiusControl),
+                    borderRadius:
+                        BorderRadius.circular(SuperTokens.radiusControl),
                   ),
                   child: Row(children: [
-                    Expanded(child: Text(_location.isEmpty ? 'Choose a location…' : _location,
-                        style: SuperText.body.copyWith(color: _location.isEmpty ? t.fg4 : t.fg1))),
+                    Expanded(
+                        child: Text(
+                            _location.isEmpty
+                                ? 'Choose a location…'
+                                : _location,
+                            style: SuperText.body.copyWith(
+                                color: _location.isEmpty ? t.fg4 : t.fg1))),
                     Icon(Icons.chevron_right, size: 16, color: t.fg4),
                   ]),
                 ),
@@ -297,10 +343,17 @@ class _WizardFormState extends State<_WizardForm> {
               InkWell(
                 onTap: () => setState(() => _failMode = !_failMode),
                 child: Row(children: [
-                  Icon(_failMode ? Icons.check_box : Icons.check_box_outline_blank, size: 18, color: _failMode ? SuperTokens.accent : t.fg4),
+                  Icon(
+                      _failMode
+                          ? Icons.check_box
+                          : Icons.check_box_outline_blank,
+                      size: 18,
+                      color: _failMode ? cs.primary : t.fg4),
                   const SizedBox(width: 8),
-                  Expanded(child: Text('Simulate a service error on Create (returns an error result)',
-                      style: SuperText.caption.copyWith(color: t.fg2))),
+                  Expanded(
+                      child: Text(
+                          'Simulate a service error on Create (returns an error result)',
+                          style: SuperText.caption.copyWith(color: t.fg2))),
                 ]),
               ),
             ],
@@ -308,11 +361,17 @@ class _WizardFormState extends State<_WizardForm> {
         ),
         Container(
           padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(border: Border(top: BorderSide(color: t.border))),
+          decoration:
+              BoxDecoration(border: Border(top: BorderSide(color: t.border))),
           child: Row(children: [
-            SuperButton(label: 'Cancel', variant: SuperButtonVariant.secondary, onPressed: () => nav.back()),
+            SuperButton(
+                label: 'Cancel',
+                variant: SuperButtonVariant.secondary,
+                onPressed: () => nav.back()),
             const Spacer(),
-            SuperButton(label: _busy ? 'Creating…' : 'Create Store', onPressed: _name.text.isEmpty || _busy ? null : _create),
+            SuperButton(
+                label: _busy ? 'Creating…' : 'Create Store',
+                onPressed: _name.text.isEmpty || _busy ? null : _create),
           ]),
         ),
       ],
@@ -326,22 +385,33 @@ class _DiscardSheet extends StatelessWidget {
     final t = context.superTheme;
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [
-          const Icon(Icons.warning_amber_rounded, color: SuperTokens.warning, size: 20),
-          const SizedBox(width: 9),
-          Text('Discard unsaved changes?', style: SuperText.heading.copyWith(color: t.fg1)),
-        ]),
-        const SizedBox(height: 8),
-        Text('The back action was blocked by the view close-guard. Discard the draft to leave, or keep editing.',
-            style: SuperText.caption.copyWith(color: t.fg3)),
-        const SizedBox(height: 16),
-        Row(children: [
-          SuperButton(label: 'Keep editing', variant: SuperButtonVariant.secondary, onPressed: () => Navigator.of(context).pop(false)),
-          const Spacer(),
-          SuperButton(label: 'Discard', onPressed: () => Navigator.of(context).pop(true)),
-        ]),
-      ]),
+      child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(children: [
+              const Icon(Icons.warning_amber_rounded,
+                  color: SuperTokens.warning, size: 20),
+              const SizedBox(width: 9),
+              Text('Discard unsaved changes?',
+                  style: SuperText.heading.copyWith(color: t.fg1)),
+            ]),
+            const SizedBox(height: 8),
+            Text(
+                'The back action was blocked by the view close-guard. Discard the draft to leave, or keep editing.',
+                style: SuperText.caption.copyWith(color: t.fg3)),
+            const SizedBox(height: 16),
+            Row(children: [
+              SuperButton(
+                  label: 'Keep editing',
+                  variant: SuperButtonVariant.secondary,
+                  onPressed: () => Navigator.of(context).pop(false)),
+              const Spacer(),
+              SuperButton(
+                  label: 'Discard',
+                  onPressed: () => Navigator.of(context).pop(true)),
+            ]),
+          ]),
     );
   }
 }
@@ -351,10 +421,14 @@ class _LocationPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.superTheme;
+    final cs = SuperMaterialThemeData.of(context).colorScheme;
     final nav = NavigationPage.of(context);
     final current = nav.params as String;
     return Column(children: [
-      OverlayHeader(eyebrow: 'Child view · depth 3', title: 'Choose location', onBack: () => nav.back()),
+      OverlayHeader(
+          eyebrow: 'Child view · depth 3',
+          title: 'Choose location',
+          onBack: () => nav.back()),
       Expanded(
         child: ListView(
           padding: const EdgeInsets.all(14),
@@ -364,15 +438,20 @@ class _LocationPicker extends StatelessWidget {
                 onTap: () => nav.submit(loc),
                 borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 13, vertical: 12),
                   decoration: BoxDecoration(
                     color: loc == current ? t.selectionFill(0.12) : t.surface,
-                    border: Border.all(color: loc == current ? SuperTokens.accent : t.border),
+                    border: Border.all(
+                        color: loc == current ? cs.primary : t.border),
                     borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
                   ),
                   child: Row(children: [
-                    Expanded(child: Text(loc, style: SuperText.body.copyWith(color: t.fg1))),
-                    if (loc == current) const Icon(Icons.check, size: 16, color: SuperTokens.accent),
+                    Expanded(
+                        child: Text(loc,
+                            style: SuperText.body.copyWith(color: t.fg1))),
+                    if (loc == current)
+                      Icon(Icons.check, size: 16, color: cs.primary),
                   ]),
                 ),
               ),
@@ -387,6 +466,7 @@ class _LocationPicker extends StatelessWidget {
 
 InputDecoration _dec(BuildContext context, String hint) {
   final t = context.superTheme;
+  final cs = SuperMaterialThemeData.of(context).colorScheme;
   OutlineInputBorder border(Color c) => OutlineInputBorder(
         borderRadius: BorderRadius.circular(SuperTokens.radiusControl),
         borderSide: BorderSide(color: c),
@@ -399,6 +479,6 @@ InputDecoration _dec(BuildContext context, String hint) {
     isDense: true,
     contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
     enabledBorder: border(t.borderStrong),
-    focusedBorder: border(SuperTokens.accent),
+    focusedBorder: border(cs.primary),
   );
 }

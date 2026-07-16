@@ -131,14 +131,14 @@ class _WarehouseList extends StatelessWidget {
     return _ContainerList(
       eyebrow: 'WAREHOUSE A',
       title: 'Inventory',
-      tint: SuperTokens.accent,
+      tint: SuperMaterialThemeData.of(context).colorScheme.primary,
       rows: [
         for (final it in _items)
           DemoRow(
             code: it.$1,
             label: it.$2,
             trailing: '${it.$4}',
-            tint: SuperTokens.accent,
+            tint: SuperMaterialThemeData.of(context).colorScheme.primary,
             onTap: () => NavigationPage.of(context)
                 .open('item', params: it, mode: NavPresentationMode.bottomSheet),
           ),
@@ -155,7 +155,7 @@ class _WarehouseItem extends StatelessWidget {
     final it = nav.params as (String, String, String, int);
     return Column(
       children: [
-        OverlayHeader(eyebrow: 'Item · bottom sheet', title: it.$2, tint: SuperTokens.accent, onClose: () => nav.close()),
+        OverlayHeader(eyebrow: 'Item · bottom sheet', title: it.$2, tint: SuperMaterialThemeData.of(context).colorScheme.primary, onClose: () => nav.close()),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(16),
