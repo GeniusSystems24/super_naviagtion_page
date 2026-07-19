@@ -342,7 +342,7 @@ class _NavigationPageState extends State<NavigationPage> {
         }
 
         Widget stack = Stack(fit: StackFit.expand, children: children);
-        if (widget.clip) stack = ClipRRect(borderRadius: BorderRadius.circular(SuperTokens.radiusCard), child: stack);
+        if (widget.clip) stack = ClipRRect(borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusCard), child: stack);
         return stack;
       },
     );
@@ -353,10 +353,10 @@ class _NavigationPageState extends State<NavigationPage> {
       builder: (context, child) {
         final isActive = NavigationHub.I.isActive(_controller.id);
         return AnimatedContainer(
-          duration: SuperTokens.durBase,
+          duration: SuperThemeData.of(context).tokens.durBase,
           decoration: BoxDecoration(
             color: t.bg,
-            borderRadius: BorderRadius.circular(SuperTokens.radiusCard),
+            borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusCard),
             border: Border.all(
               color: isActive
                   ? Color.alphaBlend(theme.colorScheme.primary.withValues(alpha: 0.6), t.borderStrong)

@@ -9,7 +9,7 @@ description: >
   dispose stacks. Supports light/dark and LTR/RTL.
 
 # package version
-version: 0.2.0
+version: 0.2.1
 
 # package homepage, repository, and issue tracker
 homepage: https://github.com/GeniusSystems24/super_naviagtion_page
@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   # Shared GeniusLink design-system foundation (theme, tokens, type, widgets).
-  super_core: ">=1.2.0 <2.0.0"
+  super_core: ">=2.1.0 <3.0.0"
 
 dev_dependencies:
   flutter_test:

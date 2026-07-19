@@ -41,7 +41,7 @@ class DemoScaffold extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-            padding: const EdgeInsets.all(SuperTokens.space6), child: body),
+            padding: EdgeInsets.all(SuperThemeData.of(context).tokens.space6), child: body),
       ),
     );
   }
@@ -106,11 +106,11 @@ class EventLogPanelState extends State<EventLogPanel> {
             'started'
           ),
         NavEvent.navigationCompleted => (
-            SuperTokens.success,
+            SuperThemeData.of(context).tokens.success,
             Icons.check,
             'completed'
           ),
-        NavEvent.navigatingBack => (SuperTokens.warning, Icons.west, 'back'),
+        NavEvent.navigatingBack => (SuperThemeData.of(context).tokens.warning, Icons.west, 'back'),
         NavEvent.viewClosed => (context.superTheme.fg3, Icons.close, 'closed'),
         NavEvent.navigationRejected => (
             SuperMaterialThemeData.of(context).colorScheme.error,
@@ -132,7 +132,7 @@ class EventLogPanelState extends State<EventLogPanel> {
       decoration: BoxDecoration(
         color: t.surface,
         border: Border.all(color: t.border),
-        borderRadius: BorderRadius.circular(SuperTokens.radiusCard),
+        borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusCard),
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -230,14 +230,14 @@ class DemoRow extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
+        borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusMd),
         onTap: onTap,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
           decoration: BoxDecoration(
             color: t.surface,
             border: Border.all(color: t.border),
-            borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
+            borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusMd),
           ),
           child: Row(
             children: [
@@ -297,7 +297,7 @@ class DemoCell extends StatelessWidget {
       decoration: BoxDecoration(
         color: t.inputBg,
         border: Border.all(color: t.border),
-        borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
+        borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusMd),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -330,7 +330,7 @@ class DemoStat extends StatelessWidget {
         decoration: BoxDecoration(
           color: t.inputBg,
           border: Border.all(color: t.border),
-          borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
+          borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusMd),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

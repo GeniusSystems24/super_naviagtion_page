@@ -187,14 +187,14 @@ class _LedgerList extends StatelessWidget {
     return _ContainerList(
       eyebrow: 'LEDGER B',
       title: 'Journal Entries',
-      tint: SuperTokens.success,
+      tint: SuperThemeData.of(context).tokens.success,
       rows: [
         for (final e in _entries)
           DemoRow(
             code: e.$1,
             label: e.$2,
             trailing: '\$${e.$3}',
-            tint: SuperTokens.success,
+            tint: SuperThemeData.of(context).tokens.success,
             onTap: () => NavigationPage.of(context)
                 .open('entry', params: e, mode: NavPresentationMode.drawer),
           ),
@@ -212,7 +212,7 @@ class _LedgerEntry extends StatelessWidget {
     final e = nav.params as (String, String, int);
     return Column(
       children: [
-        OverlayHeader(eyebrow: 'Entry · depth 2', title: e.$1, tint: SuperTokens.success, onBack: () => nav.back()),
+        OverlayHeader(eyebrow: 'Entry · depth 2', title: e.$1, tint: SuperThemeData.of(context).tokens.success, onBack: () => nav.back()),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -248,7 +248,7 @@ class _LedgerNote extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('NOTE · DEPTH 3', style: SuperText.pill.copyWith(color: SuperTokens.warning)),
+          Text('NOTE · DEPTH 3', style: SuperText.pill.copyWith(color: SuperThemeData.of(context).tokens.warning)),
           const SizedBox(height: 6),
           Text('Note on ${nav.params}', style: SuperText.heading.copyWith(color: t.fg1)),
           const SizedBox(height: 8),

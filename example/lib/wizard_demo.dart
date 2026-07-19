@@ -163,14 +163,14 @@ class _WizardStartState extends State<_WizardStart> {
             for (final tpl in _templates) ...[
               Expanded(
                 child: InkWell(
-                  borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
+                  borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusMd),
                   onTap: () => _start(context, tpl),
                   child: Container(
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
                       color: t.surface,
                       border: Border.all(color: t.border),
-                      borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
+                      borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusMd),
                     ),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,7 +199,7 @@ class _WizardStartState extends State<_WizardStart> {
               decoration: BoxDecoration(
                 color: t.inputBg,
                 border: Border.all(color: t.border),
-                borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
+                borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusMd),
               ),
               child: Text(_result!,
                   style: SuperText.caption.copyWith(color: t.fg2)),
@@ -288,7 +288,7 @@ class _WizardFormState extends State<_WizardForm> {
         OverlayHeader(
           eyebrow: 'Step 1 of 1 · setup sheet',
           title: 'Store details',
-          tint: SuperTokens.warning,
+          tint: SuperThemeData.of(context).tokens.warning,
           trailing: _dirty
               ? const StatusPill('UNSAVED', tone: PillTone.warning)
               : const StatusPill('GUARDED', tone: PillTone.neutral),
@@ -317,7 +317,7 @@ class _WizardFormState extends State<_WizardForm> {
               const SizedBox(height: 6),
               InkWell(
                 onTap: _pickLocation,
-                borderRadius: BorderRadius.circular(SuperTokens.radiusControl),
+                borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusControl),
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
@@ -325,7 +325,7 @@ class _WizardFormState extends State<_WizardForm> {
                     color: t.inputBg,
                     border: Border.all(color: t.borderStrong),
                     borderRadius:
-                        BorderRadius.circular(SuperTokens.radiusControl),
+                        BorderRadius.circular(SuperThemeData.of(context).tokens.radiusControl),
                   ),
                   child: Row(children: [
                     Expanded(
@@ -390,8 +390,8 @@ class _DiscardSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(children: [
-              const Icon(Icons.warning_amber_rounded,
-                  color: SuperTokens.warning, size: 20),
+              Icon(Icons.warning_amber_rounded,
+                  color: SuperThemeData.of(context).tokens.warning, size: 20),
               const SizedBox(width: 9),
               Text('Discard unsaved changes?',
                   style: SuperText.heading.copyWith(color: t.fg1)),
@@ -436,7 +436,7 @@ class _LocationPicker extends StatelessWidget {
             for (final loc in _locations) ...[
               InkWell(
                 onTap: () => nav.submit(loc),
-                borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
+                borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusMd),
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 13, vertical: 12),
@@ -444,7 +444,7 @@ class _LocationPicker extends StatelessWidget {
                     color: loc == current ? t.selectionFill(0.12) : t.surface,
                     border: Border.all(
                         color: loc == current ? cs.primary : t.border),
-                    borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
+                    borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusMd),
                   ),
                   child: Row(children: [
                     Expanded(
@@ -468,7 +468,7 @@ InputDecoration _dec(BuildContext context, String hint) {
   final t = context.superTheme;
   final cs = SuperMaterialThemeData.of(context).colorScheme;
   OutlineInputBorder border(Color c) => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(SuperTokens.radiusControl),
+        borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusControl),
         borderSide: BorderSide(color: c),
       );
   return InputDecoration(

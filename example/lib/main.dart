@@ -39,10 +39,10 @@ class _ExampleAppState extends State<ExampleApp> {
       title: 'Super Naviagtion Page',
       themeMode: _mode,
       theme: SuperMaterialThemeData.light(
-        palette: SuperPalette.purplePalette,
+        palette: SuperPalette.bluePalette,
       ),
       darkTheme: SuperMaterialThemeData.dark(
-        palette: SuperPalette.purplePalette,
+        palette: SuperPalette.bluePalette,
       ),
       builder: (context, child) =>
           Directionality(textDirection: _dir, child: child!),
@@ -114,7 +114,7 @@ class _Launcher extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(SuperTokens.space10),
+            padding: EdgeInsets.all(SuperThemeData.of(context).tokens.space10),
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 640),
               child: Column(
@@ -122,19 +122,19 @@ class _Launcher extends StatelessWidget {
                 children: [
                   Text('SUPER NAVIAGTION PAGE • GALLERY',
                       style: SuperText.eyebrow.copyWith(color: cs.primary)),
-                  const SizedBox(height: SuperTokens.space2),
+                  SizedBox(height: SuperThemeData.of(context).tokens.space2),
                   Text('NavigationPage Demos',
                       style: SuperText.h1.copyWith(color: t.fg1)),
-                  const SizedBox(height: SuperTokens.space2),
+                  SizedBox(height: SuperThemeData.of(context).tokens.space2),
                   Text(
                       'Five scenarios, one widget — an independent, bounded navigation container.',
                       style: SuperText.body.copyWith(color: t.fg3)),
-                  const SizedBox(height: SuperTokens.space8),
+                  SizedBox(height: SuperThemeData.of(context).tokens.space8),
                   for (final d in _demos) ...[
                     _DemoCard(demo: d),
-                    const SizedBox(height: SuperTokens.space3),
+                    SizedBox(height: SuperThemeData.of(context).tokens.space3),
                   ],
-                  const SizedBox(height: SuperTokens.space6),
+                  SizedBox(height: SuperThemeData.of(context).tokens.space6),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     SuperButton(
                       label:
@@ -142,7 +142,7 @@ class _Launcher extends StatelessWidget {
                       variant: SuperButtonVariant.secondary,
                       onPressed: onToggleTheme,
                     ),
-                    const SizedBox(width: SuperTokens.space3),
+                    SizedBox(width: SuperThemeData.of(context).tokens.space3),
                     SuperButton(
                       label: dir == TextDirection.ltr
                           ? 'العربية (RTL)'
@@ -171,14 +171,14 @@ class _DemoCard extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(SuperTokens.radiusCard),
+        borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusCard),
         onTap: () => Navigator.of(context)
             .push(MaterialPageRoute<void>(builder: demo.builder)),
         child: Container(
-          padding: const EdgeInsets.all(SuperTokens.space4),
+          padding: EdgeInsets.all(SuperThemeData.of(context).tokens.space4),
           decoration: BoxDecoration(
             color: t.surface,
-            borderRadius: BorderRadius.circular(SuperTokens.radiusCard),
+            borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusCard),
             border: Border.all(color: t.border),
             boxShadow: t.cardShadow,
           ),
@@ -190,11 +190,11 @@ class _DemoCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color:
                     Color.alphaBlend(cs.primary.withOpacity(0.14), t.surface),
-                borderRadius: BorderRadius.circular(SuperTokens.radiusControl),
+                borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusControl),
               ),
               child: Icon(demo.icon, size: 22, color: cs.primary),
             ),
-            const SizedBox(width: SuperTokens.space4),
+            SizedBox(width: SuperThemeData.of(context).tokens.space4),
             Expanded(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -85,7 +85,7 @@ class _NestedDemoState extends State<NestedDemo> {
           decoration: BoxDecoration(
             color: t.surface,
             border: Border.all(color: t.border),
-            borderRadius: BorderRadius.circular(SuperTokens.radiusCard),
+            borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusCard),
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             Text('RETENTION STRATEGY', style: SuperText.label.copyWith(color: t.fg3)),
@@ -108,7 +108,7 @@ class _NestedDemoState extends State<NestedDemo> {
             Row(children: [
               DemoStat(label: 'Depth', value: '$_depth', color: SuperMaterialThemeData.of(context).colorScheme.primary),
               const SizedBox(width: 8),
-              DemoStat(label: 'In memory', value: '$mounted', color: stateKept ? SuperTokens.success : SuperTokens.warning),
+              DemoStat(label: 'In memory', value: '$mounted', color: stateKept ? SuperThemeData.of(context).tokens.success : SuperThemeData.of(context).tokens.warning),
             ]),
           ]),
         ),
@@ -141,13 +141,13 @@ class _Choice extends StatelessWidget {
     final t = context.superTheme;
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(SuperTokens.radiusControl),
+      borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusControl),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
         decoration: BoxDecoration(
           color: selected ? t.selectionFill(0.14) : t.inputBg,
           border: Border.all(color: selected ? SuperMaterialThemeData.of(context).colorScheme.primary : t.border),
-          borderRadius: BorderRadius.circular(SuperTokens.radiusControl),
+          borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusControl),
         ),
         child: Text(label, style: SuperText.caption.copyWith(
             color: selected ? SuperMaterialThemeData.of(context).colorScheme.primary : t.fg2,
@@ -229,7 +229,7 @@ class _NestedNodeState extends State<_NestedNode> {
               decoration: BoxDecoration(
                 color: t.inputBg,
                 border: Border.all(color: t.border),
-                borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
+                borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusMd),
               ),
               child: Row(children: [
                 Expanded(
@@ -238,7 +238,7 @@ class _NestedNodeState extends State<_NestedNode> {
                     const SizedBox(height: 2),
                     Text('$_edits', style: SuperText.mono.copyWith(
                         fontSize: 18, fontWeight: FontWeight.w700,
-                        color: _edits > 0 ? SuperTokens.success : t.fg2)),
+                        color: _edits > 0 ? SuperThemeData.of(context).tokens.success : t.fg2)),
                   ]),
                 ),
                 SuperButton(label: 'Edit', variant: SuperButtonVariant.secondary, onPressed: () => setState(() => _edits++)),

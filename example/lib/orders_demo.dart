@@ -157,12 +157,12 @@ class _OrdersListState extends State<_OrdersList> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
               decoration: BoxDecoration(
-                color: t.tint(SuperTokens.success, 0.12),
-                border: Border.all(color: t.tintFill(SuperTokens.success, 0.45)),
-                borderRadius: BorderRadius.circular(SuperTokens.radiusMd),
+                color: t.tint(SuperThemeData.of(context).tokens.success, 0.12),
+                border: Border.all(color: t.tintFill(SuperThemeData.of(context).tokens.success, 0.45)),
+                borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusMd),
               ),
               child: Row(children: [
-                const Icon(Icons.check_circle_outline, size: 16, color: SuperTokens.success),
+                Icon(Icons.check_circle_outline, size: 16, color: SuperThemeData.of(context).tokens.success),
                 const SizedBox(width: 9),
                 Expanded(child: Text(_last!, style: SuperText.caption.copyWith(color: t.fg2))),
               ]),
@@ -274,7 +274,7 @@ class _ConfirmDecision extends StatelessWidget {
     final nav = NavigationPage.of(context);
     final p = nav.paramsAs<Map>()!;
     final danger = p['action'] == 'Reject';
-    final color = danger ? cs.error : SuperTokens.success;
+    final color = danger ? cs.error : SuperThemeData.of(context).tokens.success;
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -317,7 +317,7 @@ InputDecoration _inputDecoration(BuildContext context, String hint) {
   final t = context.superTheme;
     final cs = SuperMaterialThemeData.of(context).colorScheme;
   OutlineInputBorder border(Color c) => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(SuperTokens.radiusControl),
+        borderRadius: BorderRadius.circular(SuperThemeData.of(context).tokens.radiusControl),
         borderSide: BorderSide(color: c),
       );
   return InputDecoration(

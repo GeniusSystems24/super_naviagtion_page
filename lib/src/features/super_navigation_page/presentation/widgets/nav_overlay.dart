@@ -65,7 +65,9 @@ class _NavOverlayState extends State<NavOverlay> with SingleTickerProviderStateM
     super.initState();
     _ac = AnimationController(vsync: this, duration: _dur, value: 0)..forward();
     _ac.addStatusListener(_onStatus);
-    _curve = CurvedAnimation(parent: _ac, curve: SuperTokens.curveStandard);
+    // Standard easing (the brand curveStandard) — set once here; reading the
+    // theme in initState is unsafe, so use the equivalent local literal.
+    _curve = CurvedAnimation(parent: _ac, curve: const Cubic(0.4, 0, 0.2, 1));
   }
 
   void _onStatus(AnimationStatus s) {
@@ -142,7 +144,7 @@ class _NavOverlayState extends State<NavOverlay> with SingleTickerProviderStateM
         NavPosition.fill => Alignment.center,
       };
 
-  BorderRadius _radius() {
+  BorderRadius _radius(BuildContext context) {
     const r = Radius.circular(14);
     return switch (_p.position) {
       NavPosition.bottom => const BorderRadius.vertical(top: r),
@@ -151,7 +153,8 @@ class _NavOverlayState extends State<NavOverlay> with SingleTickerProviderStateM
       NavPosition.inlineEnd ||
       NavPosition.fill =>
         BorderRadius.zero,
-      NavPosition.center => BorderRadius.circular(SuperTokens.radiusCard),
+      NavPosition.center =>
+        BorderRadius.circular(context.superTheme.tokens.radiusCard),
     };
   }
 
@@ -249,8 +252,8 @@ class _NavOverlayState extends State<NavOverlay> with SingleTickerProviderStateM
     }
 
     Widget panel = AnimatedContainer(
-      duration: SuperTokens.durBase,
-      curve: SuperTokens.curveStandard,
+      duration: context.superTheme.tokens.durBase,
+      curve: context.superTheme.tokens.curveStandard,
       width: w,
       height: h,
       constraints: h == null
@@ -259,7 +262,7 @@ class _NavOverlayState extends State<NavOverlay> with SingleTickerProviderStateM
       decoration: BoxDecoration(
         color: t.surface,
         border: Border.all(color: t.borderStrong),
-        borderRadius: _radius(),
+        borderRadius: _radius(context),
         boxShadow: SuperThemeData.popShadow,
       ),
       clipBehavior: Clip.antiAlias,
